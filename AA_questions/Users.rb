@@ -37,7 +37,6 @@ class User
   end
   
   def self.find_by_id(id)
-    raise "#{self.id} is not in database" unless @id
     user_object = QuestionsDatabase.instance.execute(<<-SQL, id)
       SELECT
         *

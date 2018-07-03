@@ -18,7 +18,7 @@ CREATE TABLE questions (
 CREATE TABLE question_follows (
   id INTEGER PRIMARY KEY, 
   user_id INTEGER NOT NULL,
-  question_id INTEGER NOT NULL,
+  question_id INTEGER,
   
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (question_id) REFERENCES questions(id)
@@ -66,27 +66,10 @@ INSERT INTO
   replies(answer, question_id, user_id, parents_id)
 VALUES 
   ('Hopefully soon', (SELECT id FROM questions WHERE title = 'Job Search'), (SELECT id FROM users WHERE fname = 'Chris' AND lname = 'Worley'), NULL),
-  ('Lee',(SELECT id FROM questions WHERE title = 'Hair Cuts'), (SELECT id FROM users WHERE fname = 'Kyle' AND lname = 'McVeigh'), NULL)
-  ('Not Soon enough',(SELECT id FROM questions WHERE title = 'Job Search'), (SELECT id FROM users WHERE fname = 'Kyle' AND lname = 'McVeigh'), (SELECT id from replies WHERE body = 'Hopefully soon'));
+  ('Lee',(SELECT id FROM questions WHERE title = 'Hair Cuts'), (SELECT id FROM users WHERE fname = 'Kyle' AND lname = 'McVeigh'), NULL),
+  ('Not Soon enough',(SELECT id FROM questions WHERE title = 'Job Search'), (SELECT id FROM users WHERE fname = 'Kyle' AND lname = 'McVeigh'), (SELECT id from replies WHERE answer = 'Hopefully soon'));
 
   -- SOLUTION DATA ADDED BELOW 
-  
-INSERT INTO
-  replies (question_id, parent_reply_id, author_id, body)
-VALUES
-  ((SELECT id FROM questions WHERE title = "Earl Question"),
-  (SELECT id FROM replies WHERE body = "Did you say NOW NOW NOW?"),
-  (SELECT id FROM users WHERE fname = "Kush" AND lname = "Patel"),
-  "I think he said MEOW MEOW MEOW."
-);
-
-INSERT INTO
-  replies (question_id, parent_reply_id, author_id, body)
-VALUES
-  ((SELECT id FROM questions WHERE title = "Earl Question"),
-  NULL,
-  (SELECT id FROM users WHERE fname = "Ned" AND lname = "Ruggeri"),
-  "Did you say NOW NOW NOW?"
   
 INSERT INTO
 question_follows (user_id, question_id)
@@ -99,7 +82,7 @@ VALUES
 );
 
 INSERT INTO
-  questions (title, body, author_id)
+  questions (title, body, user_id)
 SELECT
   "Ned Question", "NED NED NED", 1
 FROM
@@ -108,7 +91,7 @@ WHERE
   users.fname = "Ned" AND users.lname = "Ruggeri";
 
 INSERT INTO
-  questions (title, body, author_id)
+  questions (title, body, user_id)
 SELECT
   "Kush Question", "KUSH KUSH KUSH", users.id
 FROM
@@ -117,7 +100,7 @@ WHERE
   users.fname = "Kush" AND users.lname = "Patel";
 
 INSERT INTO
-  questions (title, body, author_id)
+  questions (title, body, user_id)
 SELECT
   "Earl Question", "MEOW MEOW MEOW", users.id
 FROM
@@ -129,7 +112,7 @@ INSERT INTO
   question_likes (user_id, question_id)
 VALUES
   ((SELECT id FROM users WHERE fname = "Kush" AND lname = "Patel"),
-  (SELECT id FROM questions WHERE title = "Earl Question")
+  (SELECT id FROM questions WHERE title = "Earl Question"));
 
   
   

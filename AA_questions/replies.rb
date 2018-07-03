@@ -17,7 +17,6 @@ class Replies
   end
   
   def self.find_by_id(id)
-    raise "#{self.id} is not in database" unless @id
     replies_object = QuestionsDatabase.instance.execute(<<-SQL, id)
       SELECT
         *
