@@ -66,7 +66,7 @@ INSERT INTO
   replies(answer, question_id, user_id, parents_id)
 VALUES 
   ('Hopefully soon', (SELECT id FROM questions WHERE title = 'Job Search'), (SELECT id FROM users WHERE fname = 'Chris' AND lname = 'Worley'), NULL),
-  ('Lee',(SELECT id FROM questions WHERE title = 'Hair Cuts'), (SELECT id FROM users WHERE fname = 'Kyle' AND lname = 'McVeigh'), NULL),
+  ('Lee',(SELECT id FROM questions WHERE title = 'Hair Cuts'), (SELECT id FROM users WHERE fname = 'Kyle' AND lname = 'McVeigh'), 1),
   ('Not Soon enough',(SELECT id FROM questions WHERE title = 'Job Search'), (SELECT id FROM users WHERE fname = 'Kyle' AND lname = 'McVeigh'), (SELECT id from replies WHERE answer = 'Hopefully soon'));
 
   -- SOLUTION DATA ADDED BELOW 
@@ -75,11 +75,12 @@ INSERT INTO
 question_follows (user_id, question_id)
 VALUES
 ((SELECT id FROM users WHERE fname = "Ned" AND lname = "Ruggeri"),
-(SELECT id FROM questions WHERE title = "Earl Question")),
+-- (SELECT id FROM questions WHERE title = "Earl Question")
+    2),
 
 ((SELECT id FROM users WHERE fname = "Kush" AND lname = "Patel"),
-(SELECT id FROM questions WHERE title = "Earl Question")
-);
+-- (SELECT id FROM questions WHERE title = "Earl Question")
+   1);
 
 INSERT INTO
   questions (title, body, user_id)
